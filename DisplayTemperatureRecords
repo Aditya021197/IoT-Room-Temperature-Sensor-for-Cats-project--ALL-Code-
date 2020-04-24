@@ -1,0 +1,38 @@
+<html>
+<head>
+	<title>Temperature Records</title>
+</head>
+<body>
+<?php
+$server = "localhost";
+$username = "root";
+$password = "12345678";
+$database = "temperatureRecords";
+
+$conn = mysqli_connect($server, $username, $password, $database);
+
+if(!$conn){//if a connection cannot be established
+	die("Cannot Connect to the database" . mysqli_connect_error());
+	}
+	
+	$fetchTemperatureDataQuery = "SELECT * FROM tempDetails";//reserved select query
+	$queryResults = mysqli_query($conn, $fetchTemperatureDataQuery);
+	
+	if(mysqli_num_rows($queryResults) > 0){//If data exists in the table
+		//Outputs all data from every row
+		while($rows = mysqli_fetch_array($queryResults)){
+			echo "<p> Temperatures Captured: </p>" .$rows["temp"].//supposed to display everything from the temp column from the table
+			"<p>Notice:</p>".$rows["message"];//supposed to display everything from the message column from the table
+			
+			}
+		}
+		
+		else{//if there is no data in the table
+			echo "Nothing Found";
+			}
+			
+			mysqli_close($conn);//closes the connection after the executions are done
+?>
+
+</body>
+</html>
